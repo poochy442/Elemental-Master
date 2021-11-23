@@ -35,17 +35,23 @@ public class HandPresence : MonoBehaviour
 
     void UpdateAnimation()
     {
-        // Trigger
+        // Trigger - Teleport
         if (targetDevice.TryGetFeatureValue(CommonUsages.trigger, out float triggerValue) && triggerValue > triggerDeadzone)
-            handAnimator.SetFloat("Trigger", triggerValue);
+            handAnimator.SetFloat("Teleport", triggerValue);
         else
-            handAnimator.SetFloat("Trigger", 0);
+            handAnimator.SetFloat("Teleport", 0);
 
-        // Grip
-        if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue) && gripValue > triggerDeadzone)
+        // Grip - Grip spell
+        /*if (targetDevice.TryGetFeatureValue(CommonUsages.grip, out float gripValue) && gripValue > triggerDeadzone)
             handAnimator.SetFloat("Grip", gripValue);
         else
-            handAnimator.SetFloat("Grip", 0);
+            handAnimator.SetFloat("Grip", 0); */
+
+        // TODO: Local spell + cast spell
+        if (targetDevice.TryGetFeatureValue(CommonUsages.primaryButton, out bool primaryButtonValue) && primaryButtonValue)
+            handAnimator.SetBool("CastSpell", primaryButtonValue);
+        else
+            handAnimator.SetBool("CastSpell", false);
     }
     
     void Update()
